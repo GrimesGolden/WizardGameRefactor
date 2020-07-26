@@ -86,17 +86,18 @@ public class Window extends JFrame {
 
         // Store panels into gamePanels
         allPanels.put("menu", menuPanel);
-        allPanels.put("game", gamePanel);
-        allPanels.put("help", helpPanel);
         allPanels.put("pause", pausePanel);
+        allPanels.put("help", helpPanel);
         allPanels.put("load", loadPanel);
+        allPanels.put("game", gamePanel);
 
         // Add all panels into layers
         layeredPane.add(menuPanel, new Integer(1));
-        layeredPane.add(gamePanel, new Integer(1));
-        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(pausePanel, new Integer(1));
+        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(loadPanel, new Integer(1));
+        layeredPane.add(gamePanel, new Integer(1));
+
 
 
         // Start with menu panel

@@ -136,8 +136,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 updates++;
                 delta--;
             }
-            render();
-            frames++;
+            if (!game.gamePaused()) {
+                render();
+                frames++;
+            }
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
@@ -150,6 +152,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     public void tick() {
         // Level variable determines which level to tick.
+        if (!game.gamePaused())
         currLevel.tick();
     }
 
@@ -227,7 +230,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {frame.changePanel("menu");}
+            public void mousePressed(MouseEvent e) {frame.changePanel("pause"); releaseKeys(); game.pauseGame();}
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -253,6 +256,13 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseExited(MouseEvent e) {}
         });
+    }
+
+    public void releaseKeys() {
+        handler.setUp(false);
+        handler.setDown(false);
+        handler.setLeft(false);
+        handler.setRight(false);
     }
 
     /**
