@@ -87,7 +87,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         layeredPane.add(respawnBtn, new Integer(2));
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-        pauseBtn.setBounds(frame.getWidth() - 100, 0, 100, 50);  // Top right corner
+        pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
