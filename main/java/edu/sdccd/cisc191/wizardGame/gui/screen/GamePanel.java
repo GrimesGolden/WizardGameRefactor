@@ -14,6 +14,7 @@ import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelTwo;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
@@ -68,7 +69,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Load in the sprite sheets. One for the levels, one for characters.
         ss = new SpriteSheet(loader.loadImage("/main_sheet.png"));
         cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
-        this.setLevel(1);  // Start with level 1
+        this.changeLevel(3);  // Start with level 1
 
 
         // Create layered pane
@@ -193,7 +194,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.game.setHp(100); // debug
         this.game.setAmmo(50);
         this.game.setLives(3);
-        setLevel(1);
+        changeLevel(1);
 
     }
 
@@ -216,13 +217,14 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     /** Modifier methods */
     public void setHandler()                  { this.handler = currLevel.getHandler(); }
-    public void setLevel(int levelNumb){
+    public void changeLevel(int levelNumb){
         // Important method, determines which level to control.
         switch (levelNumb){
             case 1: currLevel = new LevelOne(this.game, this);
                     break;
             case 2: currLevel = new LevelTwo(this.game, this);
                     break;
+            case 3: currLevel= new Level(this.game, this);
         }
         this.update();
     }

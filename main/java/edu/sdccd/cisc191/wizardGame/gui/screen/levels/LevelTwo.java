@@ -10,7 +10,7 @@ public class LevelTwo extends AbstractLevel {
         super(game, gamePanel);
 
         currentFloor = floorTwo; // Set floor type.
-        levelNum = 2; // Set level number.
-        loadLevel(getLevel(levelNum)); // Load level.
+        levelNum = game.getLevelNumber(); // Set level number.
+        loadLevel(getLevelMap(levelNum)); // Load level.
     }
 }
