@@ -7,15 +7,13 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
-import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
-import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelTwo;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
@@ -68,7 +66,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Load in the sprite sheets. One for the levels, one for characters.
         ss = new SpriteSheet(loader.loadImage("/main_sheet.png"));
         cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
-        this.setLevel(1);  // Start with level 1
+        this.changeLevel();  // Start with level 1
 
 
         // Create layered pane
@@ -189,11 +187,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     public void resetGame() {
         // Resets hp, lives and resets entire game back to level One.
-        handler.clearHandler();
-        this.game.setHp(100); // debug
-        this.game.setAmmo(50);
-        this.game.setLives(3);
-        setLevel(1);
+        handler.clearHandler(); // Remove all game objects from handler.
+        this.game.setHp(100); // set hp to full
+        this.game.setAmmo(50); // refill ammo
+        this.game.setLives(3); // refill lives
+        this.game.setLevelNumber(1); // begin at level 1.
+        changeLevel(); // Load level. 
 
     }
 
@@ -216,14 +215,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     /** Modifier methods */
     public void setHandler()                  { this.handler = currLevel.getHandler(); }
-    public void setLevel(int levelNumb){
+    public void changeLevel(){
         // Important method, determines which level to control.
-        switch (levelNumb){
-            case 1: currLevel = new LevelOne(this.game, this);
-                    break;
-            case 2: currLevel = new LevelTwo(this.game, this);
-                    break;
-        }
+        currLevel = new Level(game, this);
+
         this.update();
     }
 

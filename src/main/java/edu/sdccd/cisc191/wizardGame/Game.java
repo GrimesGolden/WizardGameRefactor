@@ -52,6 +52,7 @@ public class Game {
     public void setHp(int hp)       { this.hp = hp; }
     public void setAmmo (int ammo)  { this.ammo = ammo; }
     public void setLives(int lives) { this.lives = lives; }
+    public void setLevelNumber(int level) { this.levelNumber = level; }
     public void incLevelNumber()    { this.levelNumber += 1; }
     public void incAmmo(int inc)    { this.ammo += inc; }
     public void decAmmo()           { this.ammo-= 1; }

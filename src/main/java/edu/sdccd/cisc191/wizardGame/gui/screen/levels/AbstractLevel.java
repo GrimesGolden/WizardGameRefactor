@@ -31,19 +31,14 @@ public abstract class AbstractLevel {
     protected SpriteSheet ss = new SpriteSheet(loader.loadImage("/main_sheet.png")); // Who says we need to declare variables?
     protected SpriteSheet cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
 
-    /** Level Maps  @see bufferedLevelImages */
+    /** Level Maps and Floors  @see bufferedLevelImages */
     protected LinkedList<BufferedImage> levelImages = new LinkedList<BufferedImage>();
+    protected LinkedList<BufferedImage> floorImages = new LinkedList<BufferedImage>();
 
-    // Floor Tile Images
-    protected BufferedImage floorOne = ss.grabImage(6, 6, 32, 32);
-    protected BufferedImage floorTwo = ss.grabImage(7, 2, 32, 32);
-    protected BufferedImage floorThree = ss.grabImage(6, 6, 32, 32);
-    protected BufferedImage floorFour = ss.grabImage(7, 2, 32, 32);
-    protected BufferedImage floorFive = ss.grabImage(6, 6, 32, 32);
 
     // Current Level Map and Current Floor. Instantiated in Extended class.
     protected BufferedImage currentMap;
-    protected BufferedImage level;
+    protected BufferedImage currentFloor;
 
     // Sprite used to display lives in HUD
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
@@ -57,6 +52,9 @@ public abstract class AbstractLevel {
 
         // Buffer all level images in level resource
         bufferLevelImages();
+
+        // Buffer all floor images from sprite sheet
+        bufferFloorImages();
     }
 
     /**
@@ -72,6 +70,15 @@ public abstract class AbstractLevel {
         for (int i = 0; i < numLevels; i++) {
             this.levelImages.add(loader.loadImage("/levels/level_" + (i + 1) + ".png"));  // +1 to offset index 0
         }
+    }
+
+    public void bufferFloorImages() {
+        // Just add particular tiles to linked list in order.
+        floorImages.add(ss.grabImage(6, 6, 32, 32));
+        floorImages.add(ss.grabImage(7, 2, 32, 32));
+        floorImages.add(ss.grabImage(6, 7, 32, 32));
+        floorImages.add(ss.grabImage(7, 9, 32, 32));
+        floorImages.add(ss.grabImage(6, 5, 32, 32));
     }
 
     public void loadLevel(BufferedImage image) {
@@ -151,7 +158,7 @@ public abstract class AbstractLevel {
 
         for(int xx = 0; xx < 30*92; xx += 32) { //debug
             for(int yy = 0; yy < 30*72; yy += 32) {
-                g.drawImage(level, xx, yy, null);
+                g.drawImage(currentFloor, xx, yy, null);
             }
         }
 
@@ -210,7 +217,8 @@ public abstract class AbstractLevel {
     public int getLives()                        { return this.game.getLives(); }
     public Handler getHandler()                  { return this.handler; }
     public Camera getCamera()                    { return this.camera; }
-    public BufferedImage getLevel(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getLevelMap(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getFloorImage(int numLevel ) { return this.floorImages.get(numLevel - 1); }  // -1 to offset index 0
 
     /** Modifier methods */
     public void decHp()                          { this.game.decHp(); }
