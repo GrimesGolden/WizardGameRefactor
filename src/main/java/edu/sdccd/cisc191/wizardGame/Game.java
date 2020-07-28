@@ -15,7 +15,7 @@ public class Game {
     private Window frame;
 
     /** Variables that are critical for controlling the Game */
-    private int ammo, hp, lives;
+    private int ammo, hp, lives, levelNumber;
 
     /** Game states */
     private boolean isWizardDead = false;
@@ -34,12 +34,14 @@ public class Game {
         this.ammo = 50;
         this.hp = 100;
         this.lives = 3;
+        this.levelNumber = 1;
         // Initialize frame
         this.frame.init();
     }
 
     /** Accessors methods */
     public Window getFrame()        { return this.frame; }
+    public int getLevelNumber()     { return this.levelNumber; }
     public int getAmmo()            { return this.ammo; }
     public int getLives()           { return this.lives; }
     public int getHp()              { return this.hp; }
@@ -50,6 +52,7 @@ public class Game {
     public void setHp(int hp)       { this.hp = hp; }
     public void setAmmo (int ammo)  { this.ammo = ammo; }
     public void setLives(int lives) { this.lives = lives; }
+    public void incLevelNumber()    { this.levelNumber += 1; }
     public void incAmmo(int inc)    { this.ammo += inc; }
     public void decAmmo()           { this.ammo-= 1; }
     public void decHp()             { this.hp--; }

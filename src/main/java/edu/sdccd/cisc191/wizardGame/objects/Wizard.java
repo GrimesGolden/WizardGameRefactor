@@ -99,6 +99,7 @@ public class Wizard extends GameObject {
                     // Got to next level
                     GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
                     gamePanel.setLevel(2); // Create an incrementing level variable here.
+                    game.incLevelNumber();
                 }
             }
 

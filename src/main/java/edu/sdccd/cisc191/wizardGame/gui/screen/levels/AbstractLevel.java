@@ -177,7 +177,7 @@ public abstract class AbstractLevel {
 
         // Creating level HUD.
         g.setColor(Color.white);
-        g.drawString("Level: " + levelNum, 5, 70); // Change to level numb variable
+        g.drawString("Level: " + game.getLevelNumber(), 5, 70); // Change to level numb variable
 
         // Creating lives HUD.
         // for the amount of lives render an image.
