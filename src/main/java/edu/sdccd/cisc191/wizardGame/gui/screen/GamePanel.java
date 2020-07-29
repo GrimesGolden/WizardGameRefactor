@@ -133,9 +133,9 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 tick();
                 updates++;
                 delta--;
-                render();
-                frames++;
             }
+            render();
+            frames++;
 
             if (game.gamePaused()) {
                 // If the game is paused then interrupt game thread.
@@ -192,7 +192,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.game.setAmmo(50); // refill ammo
         this.game.setLives(3); // refill lives
         this.game.setLevelNumber(1); // begin at level 1.
-        changeLevel(); // Load level. 
+        changeLevel(); // Load level.
 
     }
 

@@ -7,12 +7,16 @@ import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 public class Level extends AbstractLevel {
 
     public Level(Game game, GamePanel gamePanel) {
+        // Call the AbstractLevel parent constructor.
         super(game, gamePanel);
 
-        levelNum = game.getLevelNumber();
+        // Obtain the level number from game class.
+        levelNumber = game.getLevelNumber();
 
-        currentFloor = getFloorImage(levelNum);
-        levelNum = game.getLevelNumber(); // Set level number.
-        loadLevel(getLevelMap(levelNum)); // Load level.
+        // Use current level to obtain appropriate floor tile.
+        currentFloor = getFloorImage(levelNumber);
+
+        // Load the current level map using similar technique.
+        loadLevel(getLevelMap(levelNumber));
     }
 }

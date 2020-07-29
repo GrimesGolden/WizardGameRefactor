@@ -20,7 +20,6 @@ public abstract class AbstractLevel {
     // Several utility variables.
     protected Game game;
     protected GamePanel gamePanel;
-    protected int levelNum;
     protected BufferedImageLoader loader = new BufferedImageLoader();
 
     // Load camera and handler.
@@ -31,14 +30,19 @@ public abstract class AbstractLevel {
     protected SpriteSheet ss = new SpriteSheet(loader.loadImage("/main_sheet.png")); // Who says we need to declare variables?
     protected SpriteSheet cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
 
-    /** Level Maps and Floors  @see bufferedLevelImages */
+    // Track level number.
+    protected int levelNumber;
+
+    /** Level Maps, Floors and Blocks  @see bufferedLevelImages */
     protected LinkedList<BufferedImage> levelImages = new LinkedList<BufferedImage>();
     protected LinkedList<BufferedImage> floorImages = new LinkedList<BufferedImage>();
+    protected LinkedList<BufferedImage> blockImages = new LinkedList<BufferedImage>();
 
 
-    // Current Level Map and Current Floor. Instantiated in Extended class.
+    // Images that change each level, Map, Floor and Block. Instantiated in Extended class.
     protected BufferedImage currentMap;
     protected BufferedImage currentFloor;
+    protected BufferedImage currentBlock;
 
     // Sprite used to display lives in HUD
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
@@ -50,11 +54,10 @@ public abstract class AbstractLevel {
         camera = new Camera(0, 0); // and the camera
         handler = new Handler(); // make sure the handler is started from new.
 
-        // Buffer all level images in level resource
+        // Buffer all level, floor and block images in level resource and sprite sheet.
         bufferLevelImages();
-
-        // Buffer all floor images from sprite sheet
         bufferFloorImages();
+        bufferBlockImages();
     }
 
     /**
@@ -72,13 +75,28 @@ public abstract class AbstractLevel {
         }
     }
 
+    /**
+     * To change the floor or wall blocks.
+     * Alter images in the following linked list.
+     */
+
     public void bufferFloorImages() {
         // Just add particular tiles to linked list in order.
-        floorImages.add(ss.grabImage(6, 6, 32, 32));
+        // This is the place to change level design look.
+        floorImages.add(ss.grabImage(6, 6, 32, 32)); // Level one....
         floorImages.add(ss.grabImage(7, 2, 32, 32));
-        floorImages.add(ss.grabImage(6, 7, 32, 32));
+        floorImages.add(ss.grabImage(6, 3, 32, 32));
         floorImages.add(ss.grabImage(7, 9, 32, 32));
         floorImages.add(ss.grabImage(6, 5, 32, 32));
+    }
+
+    public void bufferBlockImages() {
+        // Just add particular tiles to linked list in order.
+        blockImages.add(ss.grabImage(6, 9, 32, 32)); // Level one..
+        blockImages.add(ss.grabImage(6, 10, 32, 32));
+        blockImages.add(ss.grabImage(6, 13, 32, 32));
+        blockImages.add(ss.grabImage(6, 12, 32, 32));
+        blockImages.add(ss.grabImage(6, 13, 32, 32));
     }
 
     public void loadLevel(BufferedImage image) {
@@ -212,6 +230,7 @@ public abstract class AbstractLevel {
     } // end render
 
     /** Accessor methods */
+    public Game getGame()                        { return this.game; }
     public int getHp()                           { return this.game.getHp(); }
     public int getAmmo()                         { return this.game.getAmmo(); }
     public int getLives()                        { return this.game.getLives(); }
@@ -219,6 +238,8 @@ public abstract class AbstractLevel {
     public Camera getCamera()                    { return this.camera; }
     public BufferedImage getLevelMap(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
     public BufferedImage getFloorImage(int numLevel ) { return this.floorImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getBlockImage(int numLevel ) { return this.blockImages.get(numLevel - 1); }
+    public int getLevelNumber()                      { return game.getLevelNumber(); } // Refactor?
 
     /** Modifier methods */
     public void decHp()                          { this.game.decHp(); }
